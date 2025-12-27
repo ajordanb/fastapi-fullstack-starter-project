@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import {useState, useEffect, JSX} from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -13,7 +13,7 @@ import useModalContext from '@/hooks/useModal'
 
 interface UserFormDialogProps {
   user?: User | null
-  triggerComponent: React.ReactElement
+  triggerComponent: JSX.Element
   onSuccess?: () => void
   mode?: 'create' | 'edit'
 }

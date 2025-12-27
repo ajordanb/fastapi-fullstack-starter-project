@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
@@ -24,24 +24,17 @@ export function DramatiqDashboard() {
   const { openModal } = useModalContext()
   const [selectedQueue, setSelectedQueue] = useState('default')
   const [selectedJob, setSelectedJob] = useState<Job | null>(null)
-
-  // Fetch dashboard data
   const { data: dashboardData, isLoading: isDashboardLoading } = dramatiq.useDashboardQuery()
-
-  // Fetch queues
   const { data: queues } = dramatiq.useAllQueuesQuery()
 
-  // Fetch jobs for selected queue
   const { data: jobs, isLoading: isJobsLoading, refetch: refetchJobs } = dramatiq.useAllJobsQuery(
     selectedQueue,
     100
   )
 
-  // Mutations
   const retryJobMutation = dramatiq.retryJob
   const cancelJobMutation = dramatiq.cancelJob
 
-  // Set loading state for jobs
   setLoading("Loading jobs", isJobsLoading)
 
   const handleViewDetails = async (messageId: string) => {
@@ -118,7 +111,7 @@ export function DramatiqDashboard() {
                   {queues?.map((queue) => (
                     <SelectItem key={queue} value={queue}>
                       {queue}
-                    </SelectItem>
+                    </SelectItem>  as React["JSX.Element"]
                   ))}
                 </SelectContent>
               </Select>
@@ -136,7 +129,6 @@ export function DramatiqDashboard() {
         </CardContent>
       </Card>
 
-      {/* Job Detail Modal - Hidden trigger, opened programmatically */}
       <div className="hidden">
         <JobDetailModal
           job={selectedJob}

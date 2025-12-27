@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { UserStatsCards } from './userStatsCards'
@@ -11,14 +11,8 @@ import { useToast } from '@/hooks/useToast'
 export function UserDashboard() {
   const { user } = useApi()
   const { setLoading } = useToast()
-
-  // Fetch all users
   const { data: users, isLoading, refetch } = user.useAllUsersQuery()
-
-  // Set loading state
   setLoading('Loading users', isLoading)
-
-  // Calculate stats from users
   const stats = useMemo(() => {
     if (!users) {
       return {
@@ -56,9 +50,9 @@ export function UserDashboard() {
             mode="create"
             triggerComponent={
               <Button size="sm">
-                <UserPlus className="mr-2 h-4 w-4" />
+                <UserPlus className="mr-2 h-4 w-4"/>
                 Add User
-              </Button>
+              </Button> as React["JSX.Element"]
             }
             onSuccess={() => refetch()}
           />

@@ -94,16 +94,13 @@ export function JobsGrid({
     <CustomGrid<Job>
       rowData={jobs}
       columnDefs={columnDefs}
-      loading={isLoading}
       pagination={true}
       paginationPageSize={20}
-      paginationPageSizeSelector={[10, 20, 50, 100]}
       defaultColDef={{
         sortable: true,
         resizable: true,
         filter: true,
       }}
-      domLayout="autoHeight"
     />
   )
 }

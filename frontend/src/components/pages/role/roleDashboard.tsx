@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { RoleStatsCards } from './roleStatsCards'
@@ -11,14 +11,8 @@ import { useToast } from '@/hooks/useToast'
 export function RoleDashboard() {
   const { role } = useApi()
   const { setLoading } = useToast()
-
-  // Fetch all roles
   const { data: roles, isLoading, refetch } = role.useAllRolesQuery()
-
-  // Set loading state
   setLoading('Loading roles', isLoading)
-
-  // Calculate stats from roles
   const stats = useMemo(() => {
     if (!roles) {
       return {
@@ -29,7 +23,6 @@ export function RoleDashboard() {
       }
     }
 
-    // Count unique scopes across all roles
     const uniqueScopes = new Set<string>()
     roles.forEach((role) => {
       role.scopes.forEach((scope) => uniqueScopes.add(scope))
@@ -62,9 +55,9 @@ export function RoleDashboard() {
             mode="create"
             triggerComponent={
               <Button size="sm">
-                <Plus className="mr-2 h-4 w-4" />
+                <Plus className="mr-2 h-4 w-4"/>
                 Add Role
-              </Button>
+              </Button> as React["JSX.Element"]
             }
             onSuccess={() => refetch()}
           />

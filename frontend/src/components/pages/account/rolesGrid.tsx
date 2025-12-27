@@ -88,16 +88,13 @@ export function RolesGrid({ roles, isLoading }: RolesGridProps) {
     <CustomGrid<UserRole>
       rowData={roles}
       columnDefs={columnDefs}
-      loading={isLoading}
       pagination={true}
       paginationPageSize={10}
-      paginationPageSizeSelector={[5, 10, 20]}
       defaultColDef={{
         sortable: true,
         resizable: true,
         filter: true,
       }}
-      domLayout="autoHeight"
       enableSearch={true}
     />
   )
