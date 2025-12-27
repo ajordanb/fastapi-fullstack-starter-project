@@ -17,6 +17,7 @@ from fastapi import Request
 from starlette.responses import RedirectResponse
 
 from app.core.config import settings
+from app.core.middleware import RequestIDMiddleware
 from app.core.logging_config import setup_logging, get_logger
 from app.db.db_manager import db_manager, create_app_admins
 from app.api.v1.auth.endpoints import auth_router
@@ -69,7 +70,8 @@ app = create_app(lifespan=lifespan,
                                         allow_credentials=True,
                                         allow_methods=["*"],
                                         allow_headers=["*"]
-                                        )]
+                                        ),
+                             Middleware(RequestIDMiddleware)]
                  )
 
 limiter = Limiter(key_func=get_remote_address)
@@ -80,14 +82,14 @@ app.add_exception_handler(RateLimitExceeded, rate_limit_handler)
 app.add_exception_handler(ValidationError, pydantic_validation_handler)
 app.add_exception_handler(Exception, general_exception_handler)
 
-
 @app.middleware("http")
 async def log_access(request: Request, call_next):
     start_time = time.monotonic()
     response = await call_next(request)
     process_time = time.monotonic() - start_time
     if not request.url.path.startswith("/health"):
-        logger.info(f"{request.method} {response.status_code} {process_time:.2f}s {request.url.path}")
+        request_id = getattr(request.state, "request_id", "-")
+        logger.info(f"[{request_id}] {request.method} {response.status_code} {process_time:.2f}s {request.url.path}")
     return response
 
 

@@ -13,8 +13,13 @@ from app.core.config import settings, Mode
 
 
 def _get_request_id(request: Request) -> str:
-    """Extract request ID from header or generate new one"""
-    return request.headers.get("X-Request-ID") or str(uuid.uuid4())
+    """Extract request ID from state (set by middleware), header, or generate new one"""
+    return (
+        getattr(request.state, "request_id", None)
+        or request.headers.get("X-Request-ID")
+        or request.headers.get("x-request-id")
+        or str(uuid.uuid4().hex)
+    )
 
 
 def _get_client_ip(request: Request) -> Optional[str]:
