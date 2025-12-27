@@ -8,327 +8,109 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as ValidateMagicLinkRouteImport } from './routes/validateMagicLink'
+import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
+import { Route as SsoRouteImport } from './routes/sso'
+import { Route as RequestNewPasswordRouteImport } from './routes/requestNewPassword'
+import { Route as RequestMagicLinkRouteImport } from './routes/requestMagicLink'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedManagerReportsRouteImport } from './routes/_authenticated/manager/reports'
+import { Route as AuthenticatedManagerLayoutRouteImport } from './routes/_authenticated/manager/_layout'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
+import { Route as AuthenticatedAdminRolesRouteImport } from './routes/_authenticated/admin/roles'
+import { Route as AuthenticatedAdminJobsRouteImport } from './routes/_authenticated/admin/jobs'
+import { Route as AuthenticatedAdminLayoutRouteImport } from './routes/_authenticated/admin/_layout'
 
-// Import Routes
-
-import { Route as rootRoute } from './routes/__root'
-import { Route as ValidateMagicLinkImport } from './routes/validateMagicLink'
-import { Route as UnauthorizedImport } from './routes/unauthorized'
-import { Route as SsoImport } from './routes/sso'
-import { Route as RequestNewPasswordImport } from './routes/requestNewPassword'
-import { Route as RequestMagicLinkImport } from './routes/requestMagicLink'
-import { Route as RegisterImport } from './routes/register'
-import { Route as LoginImport } from './routes/login'
-import { Route as AuthenticatedImport } from './routes/_authenticated'
-import { Route as IndexImport } from './routes/index'
-import { Route as AuthenticatedAccountImport } from './routes/_authenticated/account'
-import { Route as AuthenticatedManagerReportsImport } from './routes/_authenticated/manager/reports'
-import { Route as AuthenticatedManagerLayoutImport } from './routes/_authenticated/manager/_layout'
-import { Route as AuthenticatedAdminUsersImport } from './routes/_authenticated/admin/users'
-import { Route as AuthenticatedAdminRolesImport } from './routes/_authenticated/admin/roles'
-import { Route as AuthenticatedAdminJobsImport } from './routes/_authenticated/admin/jobs'
-import { Route as AuthenticatedAdminLayoutImport } from './routes/_authenticated/admin/_layout'
-
-// Create Virtual Routes
-
-const AuthenticatedManagerImport = createFileRoute('/_authenticated/manager')()
-const AuthenticatedAdminImport = createFileRoute('/_authenticated/admin')()
-
-// Create/Update Routes
-
-const ValidateMagicLinkRoute = ValidateMagicLinkImport.update({
+const ValidateMagicLinkRoute = ValidateMagicLinkRouteImport.update({
   id: '/validateMagicLink',
   path: '/validateMagicLink',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const UnauthorizedRoute = UnauthorizedImport.update({
+const UnauthorizedRoute = UnauthorizedRouteImport.update({
   id: '/unauthorized',
   path: '/unauthorized',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const SsoRoute = SsoImport.update({
+const SsoRoute = SsoRouteImport.update({
   id: '/sso',
   path: '/sso',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const RequestNewPasswordRoute = RequestNewPasswordImport.update({
+const RequestNewPasswordRoute = RequestNewPasswordRouteImport.update({
   id: '/requestNewPassword',
   path: '/requestNewPassword',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const RequestMagicLinkRoute = RequestMagicLinkImport.update({
+const RequestMagicLinkRoute = RequestMagicLinkRouteImport.update({
   id: '/requestMagicLink',
   path: '/requestMagicLink',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const RegisterRoute = RegisterImport.update({
+const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const LoginRoute = LoginImport.update({
+const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AuthenticatedRoute = AuthenticatedImport.update({
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AuthenticatedManagerRoute = AuthenticatedManagerImport.update({
-  id: '/manager',
-  path: '/manager',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-
-const AuthenticatedAdminRoute = AuthenticatedAdminImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-
-const AuthenticatedAccountRoute = AuthenticatedAccountImport.update({
+const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   id: '/account',
   path: '/account',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
-
 const AuthenticatedManagerReportsRoute =
-  AuthenticatedManagerReportsImport.update({
-    id: '/reports',
-    path: '/reports',
-    getParentRoute: () => AuthenticatedManagerRoute,
+  AuthenticatedManagerReportsRouteImport.update({
+    id: '/manager/reports',
+    path: '/manager/reports',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
-
-const AuthenticatedManagerLayoutRoute = AuthenticatedManagerLayoutImport.update(
-  {
-    id: '/_layout',
-    getParentRoute: () => AuthenticatedManagerRoute,
-  } as any,
-)
-
-const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => AuthenticatedAdminRoute,
+const AuthenticatedManagerLayoutRoute =
+  AuthenticatedManagerLayoutRouteImport.update({
+    id: '/manager/_layout',
+    path: '/manager',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-
-const AuthenticatedAdminRolesRoute = AuthenticatedAdminRolesImport.update({
-  id: '/roles',
-  path: '/roles',
-  getParentRoute: () => AuthenticatedAdminRoute,
+const AuthenticatedAdminRolesRoute = AuthenticatedAdminRolesRouteImport.update({
+  id: '/admin/roles',
+  path: '/admin/roles',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-
-const AuthenticatedAdminJobsRoute = AuthenticatedAdminJobsImport.update({
-  id: '/jobs',
-  path: '/jobs',
-  getParentRoute: () => AuthenticatedAdminRoute,
+const AuthenticatedAdminJobsRoute = AuthenticatedAdminJobsRouteImport.update({
+  id: '/admin/jobs',
+  path: '/admin/jobs',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-
-const AuthenticatedAdminLayoutRoute = AuthenticatedAdminLayoutImport.update({
-  id: '/_layout',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthenticatedImport
-      parentRoute: typeof rootRoute
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
-      parentRoute: typeof rootRoute
-    }
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterImport
-      parentRoute: typeof rootRoute
-    }
-    '/requestMagicLink': {
-      id: '/requestMagicLink'
-      path: '/requestMagicLink'
-      fullPath: '/requestMagicLink'
-      preLoaderRoute: typeof RequestMagicLinkImport
-      parentRoute: typeof rootRoute
-    }
-    '/requestNewPassword': {
-      id: '/requestNewPassword'
-      path: '/requestNewPassword'
-      fullPath: '/requestNewPassword'
-      preLoaderRoute: typeof RequestNewPasswordImport
-      parentRoute: typeof rootRoute
-    }
-    '/sso': {
-      id: '/sso'
-      path: '/sso'
-      fullPath: '/sso'
-      preLoaderRoute: typeof SsoImport
-      parentRoute: typeof rootRoute
-    }
-    '/unauthorized': {
-      id: '/unauthorized'
-      path: '/unauthorized'
-      fullPath: '/unauthorized'
-      preLoaderRoute: typeof UnauthorizedImport
-      parentRoute: typeof rootRoute
-    }
-    '/validateMagicLink': {
-      id: '/validateMagicLink'
-      path: '/validateMagicLink'
-      fullPath: '/validateMagicLink'
-      preLoaderRoute: typeof ValidateMagicLinkImport
-      parentRoute: typeof rootRoute
-    }
-    '/_authenticated/account': {
-      id: '/_authenticated/account'
-      path: '/account'
-      fullPath: '/account'
-      preLoaderRoute: typeof AuthenticatedAccountImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/admin/_layout': {
-      id: '/_authenticated/admin/_layout'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminLayoutImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/jobs': {
-      id: '/_authenticated/admin/jobs'
-      path: '/jobs'
-      fullPath: '/admin/jobs'
-      preLoaderRoute: typeof AuthenticatedAdminJobsImport
-      parentRoute: typeof AuthenticatedAdminImport
-    }
-    '/_authenticated/admin/roles': {
-      id: '/_authenticated/admin/roles'
-      path: '/roles'
-      fullPath: '/admin/roles'
-      preLoaderRoute: typeof AuthenticatedAdminRolesImport
-      parentRoute: typeof AuthenticatedAdminImport
-    }
-    '/_authenticated/admin/users': {
-      id: '/_authenticated/admin/users'
-      path: '/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AuthenticatedAdminUsersImport
-      parentRoute: typeof AuthenticatedAdminImport
-    }
-    '/_authenticated/manager': {
-      id: '/_authenticated/manager'
-      path: '/manager'
-      fullPath: '/manager'
-      preLoaderRoute: typeof AuthenticatedManagerImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/manager/_layout': {
-      id: '/_authenticated/manager/_layout'
-      path: '/manager'
-      fullPath: '/manager'
-      preLoaderRoute: typeof AuthenticatedManagerLayoutImport
-      parentRoute: typeof AuthenticatedManagerRoute
-    }
-    '/_authenticated/manager/reports': {
-      id: '/_authenticated/manager/reports'
-      path: '/reports'
-      fullPath: '/manager/reports'
-      preLoaderRoute: typeof AuthenticatedManagerReportsImport
-      parentRoute: typeof AuthenticatedManagerImport
-    }
-  }
-}
-
-// Create and export the route tree
-
-interface AuthenticatedAdminRouteChildren {
-  AuthenticatedAdminLayoutRoute: typeof AuthenticatedAdminLayoutRoute
-  AuthenticatedAdminJobsRoute: typeof AuthenticatedAdminJobsRoute
-  AuthenticatedAdminRolesRoute: typeof AuthenticatedAdminRolesRoute
-  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
-}
-
-const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
-  AuthenticatedAdminLayoutRoute: AuthenticatedAdminLayoutRoute,
-  AuthenticatedAdminJobsRoute: AuthenticatedAdminJobsRoute,
-  AuthenticatedAdminRolesRoute: AuthenticatedAdminRolesRoute,
-  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
-}
-
-const AuthenticatedAdminRouteWithChildren =
-  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
-
-interface AuthenticatedManagerRouteChildren {
-  AuthenticatedManagerLayoutRoute: typeof AuthenticatedManagerLayoutRoute
-  AuthenticatedManagerReportsRoute: typeof AuthenticatedManagerReportsRoute
-}
-
-const AuthenticatedManagerRouteChildren: AuthenticatedManagerRouteChildren = {
-  AuthenticatedManagerLayoutRoute: AuthenticatedManagerLayoutRoute,
-  AuthenticatedManagerReportsRoute: AuthenticatedManagerReportsRoute,
-}
-
-const AuthenticatedManagerRouteWithChildren =
-  AuthenticatedManagerRoute._addFileChildren(AuthenticatedManagerRouteChildren)
-
-interface AuthenticatedRouteChildren {
-  AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
-  AuthenticatedManagerRoute: typeof AuthenticatedManagerRouteWithChildren
-}
-
-const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedAccountRoute: AuthenticatedAccountRoute,
-  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
-  AuthenticatedManagerRoute: AuthenticatedManagerRouteWithChildren,
-}
-
-const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
-  AuthenticatedRouteChildren,
-)
+const AuthenticatedAdminLayoutRoute =
+  AuthenticatedAdminLayoutRouteImport.update({
+    id: '/admin/_layout',
+    path: '/admin',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/requestMagicLink': typeof RequestMagicLinkRoute
@@ -344,10 +126,8 @@ export interface FileRoutesByFullPath {
   '/manager': typeof AuthenticatedManagerLayoutRoute
   '/manager/reports': typeof AuthenticatedManagerReportsRoute
 }
-
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/requestMagicLink': typeof RequestMagicLinkRoute
@@ -363,9 +143,8 @@ export interface FileRoutesByTo {
   '/manager': typeof AuthenticatedManagerLayoutRoute
   '/manager/reports': typeof AuthenticatedManagerReportsRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
@@ -376,21 +155,17 @@ export interface FileRoutesById {
   '/unauthorized': typeof UnauthorizedRoute
   '/validateMagicLink': typeof ValidateMagicLinkRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/admin/_layout': typeof AuthenticatedAdminLayoutRoute
   '/_authenticated/admin/jobs': typeof AuthenticatedAdminJobsRoute
   '/_authenticated/admin/roles': typeof AuthenticatedAdminRolesRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/_authenticated/manager': typeof AuthenticatedManagerRouteWithChildren
   '/_authenticated/manager/_layout': typeof AuthenticatedManagerLayoutRoute
   '/_authenticated/manager/reports': typeof AuthenticatedManagerReportsRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | ''
     | '/login'
     | '/register'
     | '/requestMagicLink'
@@ -408,7 +183,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | ''
     | '/login'
     | '/register'
     | '/requestMagicLink'
@@ -435,17 +209,14 @@ export interface FileRouteTypes {
     | '/unauthorized'
     | '/validateMagicLink'
     | '/_authenticated/account'
-    | '/_authenticated/admin'
     | '/_authenticated/admin/_layout'
     | '/_authenticated/admin/jobs'
     | '/_authenticated/admin/roles'
     | '/_authenticated/admin/users'
-    | '/_authenticated/manager'
     | '/_authenticated/manager/_layout'
     | '/_authenticated/manager/reports'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
@@ -458,6 +229,147 @@ export interface RootRouteChildren {
   ValidateMagicLinkRoute: typeof ValidateMagicLinkRoute
 }
 
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/validateMagicLink': {
+      id: '/validateMagicLink'
+      path: '/validateMagicLink'
+      fullPath: '/validateMagicLink'
+      preLoaderRoute: typeof ValidateMagicLinkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unauthorized': {
+      id: '/unauthorized'
+      path: '/unauthorized'
+      fullPath: '/unauthorized'
+      preLoaderRoute: typeof UnauthorizedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sso': {
+      id: '/sso'
+      path: '/sso'
+      fullPath: '/sso'
+      preLoaderRoute: typeof SsoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/requestNewPassword': {
+      id: '/requestNewPassword'
+      path: '/requestNewPassword'
+      fullPath: '/requestNewPassword'
+      preLoaderRoute: typeof RequestNewPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/requestMagicLink': {
+      id: '/requestMagicLink'
+      path: '/requestMagicLink'
+      fullPath: '/requestMagicLink'
+      preLoaderRoute: typeof RequestMagicLinkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/account': {
+      id: '/_authenticated/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/manager/reports': {
+      id: '/_authenticated/manager/reports'
+      path: '/manager/reports'
+      fullPath: '/manager/reports'
+      preLoaderRoute: typeof AuthenticatedManagerReportsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/manager/_layout': {
+      id: '/_authenticated/manager/_layout'
+      path: '/manager'
+      fullPath: '/manager'
+      preLoaderRoute: typeof AuthenticatedManagerLayoutRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/roles': {
+      id: '/_authenticated/admin/roles'
+      path: '/admin/roles'
+      fullPath: '/admin/roles'
+      preLoaderRoute: typeof AuthenticatedAdminRolesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/jobs': {
+      id: '/_authenticated/admin/jobs'
+      path: '/admin/jobs'
+      fullPath: '/admin/jobs'
+      preLoaderRoute: typeof AuthenticatedAdminJobsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/_layout': {
+      id: '/_authenticated/admin/_layout'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminLayoutRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+  }
+}
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+  AuthenticatedAdminLayoutRoute: typeof AuthenticatedAdminLayoutRoute
+  AuthenticatedAdminJobsRoute: typeof AuthenticatedAdminJobsRoute
+  AuthenticatedAdminRolesRoute: typeof AuthenticatedAdminRolesRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedManagerLayoutRoute: typeof AuthenticatedManagerLayoutRoute
+  AuthenticatedManagerReportsRoute: typeof AuthenticatedManagerReportsRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+  AuthenticatedAdminLayoutRoute: AuthenticatedAdminLayoutRoute,
+  AuthenticatedAdminJobsRoute: AuthenticatedAdminJobsRoute,
+  AuthenticatedAdminRolesRoute: AuthenticatedAdminRolesRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedManagerLayoutRoute: AuthenticatedManagerLayoutRoute,
+  AuthenticatedManagerReportsRoute: AuthenticatedManagerReportsRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
@@ -469,106 +381,6 @@ const rootRouteChildren: RootRouteChildren = {
   UnauthorizedRoute: UnauthorizedRoute,
   ValidateMagicLinkRoute: ValidateMagicLinkRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/_authenticated",
-        "/login",
-        "/register",
-        "/requestMagicLink",
-        "/requestNewPassword",
-        "/sso",
-        "/unauthorized",
-        "/validateMagicLink"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/_authenticated": {
-      "filePath": "_authenticated.tsx",
-      "children": [
-        "/_authenticated/account",
-        "/_authenticated/admin",
-        "/_authenticated/manager"
-      ]
-    },
-    "/login": {
-      "filePath": "login.tsx"
-    },
-    "/register": {
-      "filePath": "register.tsx"
-    },
-    "/requestMagicLink": {
-      "filePath": "requestMagicLink.tsx"
-    },
-    "/requestNewPassword": {
-      "filePath": "requestNewPassword.tsx"
-    },
-    "/sso": {
-      "filePath": "sso.tsx"
-    },
-    "/unauthorized": {
-      "filePath": "unauthorized.tsx"
-    },
-    "/validateMagicLink": {
-      "filePath": "validateMagicLink.tsx"
-    },
-    "/_authenticated/account": {
-      "filePath": "_authenticated/account.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/admin": {
-      "filePath": "_authenticated/admin",
-      "parent": "/_authenticated",
-      "children": [
-        "/_authenticated/admin/_layout",
-        "/_authenticated/admin/jobs",
-        "/_authenticated/admin/roles",
-        "/_authenticated/admin/users"
-      ]
-    },
-    "/_authenticated/admin/_layout": {
-      "filePath": "_authenticated/admin/_layout.tsx",
-      "parent": "/_authenticated/admin"
-    },
-    "/_authenticated/admin/jobs": {
-      "filePath": "_authenticated/admin/jobs.tsx",
-      "parent": "/_authenticated/admin"
-    },
-    "/_authenticated/admin/roles": {
-      "filePath": "_authenticated/admin/roles.tsx",
-      "parent": "/_authenticated/admin"
-    },
-    "/_authenticated/admin/users": {
-      "filePath": "_authenticated/admin/users.tsx",
-      "parent": "/_authenticated/admin"
-    },
-    "/_authenticated/manager": {
-      "filePath": "_authenticated/manager",
-      "parent": "/_authenticated",
-      "children": [
-        "/_authenticated/manager/_layout",
-        "/_authenticated/manager/reports"
-      ]
-    },
-    "/_authenticated/manager/_layout": {
-      "filePath": "_authenticated/manager/_layout.tsx",
-      "parent": "/_authenticated/manager"
-    },
-    "/_authenticated/manager/reports": {
-      "filePath": "_authenticated/manager/reports.tsx",
-      "parent": "/_authenticated/manager"
-    }
-  }
-}
-ROUTE_MANIFEST_END */
