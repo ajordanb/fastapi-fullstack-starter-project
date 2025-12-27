@@ -166,6 +166,7 @@ async def app_documentation():
         scalar_proxy_url="https://proxy.scalar.com",
         persist_auth=True,
         hide_models=True,
+        hide_client_button=True,
         authentication={
             "client_id": "your client id",
             "client_secret": "your client secret",
