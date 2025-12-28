@@ -1,7 +1,5 @@
-import React, { useMemo } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { UserStatsCards } from './userStatsCards'
 import { UserGrid } from './userGrid'
 import { UserFormDialog } from './userFormDialog'
 import { RefreshCw, UserPlus } from 'lucide-react'
@@ -13,24 +11,6 @@ export function UserDashboard() {
   const { setLoading } = useToast()
   const { data: users, isLoading, refetch } = user.useAllUsersQuery()
   setLoading('Loading users', isLoading)
-  const stats = useMemo(() => {
-    if (!users) {
-      return {
-        totalUsers: 0,
-        activeUsers: 0,
-        inactiveUsers: 0,
-        verifiedEmails: 0,
-      }
-    }
-
-    return {
-      totalUsers: users.length,
-      activeUsers: users.filter((u) => u.is_active).length,
-      inactiveUsers: users.filter((u) => !u.is_active).length,
-      verifiedEmails: users.filter((u) => u.email_confirmed).length,
-    }
-  }, [users])
-
   return (
     <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
@@ -58,14 +38,6 @@ export function UserDashboard() {
           />
         </div>
       </div>
-
-      {/* Stats Cards */}
-      <UserStatsCards
-        totalUsers={stats.totalUsers}
-        activeUsers={stats.activeUsers}
-        inactiveUsers={stats.inactiveUsers}
-        verifiedEmails={stats.verifiedEmails}
-      />
 
       {/* Users Table */}
       <Card>

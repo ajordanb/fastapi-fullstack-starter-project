@@ -1,7 +1,6 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { RoleStatsCards } from './roleStatsCards'
 import { RoleGrid } from './roleGrid'
 import { RoleFormDialog } from './roleFormDialog'
 import { RefreshCw, Plus } from 'lucide-react'
@@ -13,29 +12,6 @@ export function RoleDashboard() {
   const { setLoading } = useToast()
   const { data: roles, isLoading, refetch } = role.useAllRolesQuery()
   setLoading('Loading roles', isLoading)
-  const stats = useMemo(() => {
-    if (!roles) {
-      return {
-        totalRoles: 0,
-        systemRoles: 0,
-        customRoles: 0,
-        totalScopes: 0,
-      }
-    }
-
-    const uniqueScopes = new Set<string>()
-    roles.forEach((role) => {
-      role.scopes.forEach((scope) => uniqueScopes.add(scope))
-    })
-
-    return {
-      totalRoles: roles.length,
-      systemRoles: roles.filter((r) => r.created_by.toLowerCase() === 'system').length,
-      customRoles: roles.filter((r) => r.created_by.toLowerCase() !== 'system').length,
-      totalScopes: uniqueScopes.size,
-    }
-  }, [roles])
-
   return (
     <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
@@ -64,13 +40,6 @@ export function RoleDashboard() {
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <RoleStatsCards
-        totalRoles={stats.totalRoles}
-        systemRoles={stats.systemRoles}
-        customRoles={stats.customRoles}
-        totalScopes={stats.totalScopes}
-      />
 
       {/* Roles Table */}
       <Card>

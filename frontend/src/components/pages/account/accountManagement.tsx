@@ -1,8 +1,6 @@
-import { useMemo } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { AccountStatsCards } from './accountStatsCards'
 import { ProfileUpdateForm } from './profileUpdateForm'
 import { UpdatePasswordDialog } from './updatePasswordDialog'
 import { RefreshCw, Lock } from 'lucide-react'
@@ -12,34 +10,8 @@ import { useToast } from '@/hooks/useToast'
 export function AccountManagement() {
   const { user } = useApi()
   const { setLoading } = useToast()
-
-  // Fetch current user profile
   const { data: currentUser, isLoading, refetch } = user.useUserProfileQuery()
-
-  // Set loading state
   setLoading('Loading account information', isLoading)
-
-  // Calculate stats from current user
-  const stats = useMemo(() => {
-    if (!currentUser) {
-      return {
-        totalRoles: 0,
-        totalApiKeys: 0,
-        activeApiKeys: 0,
-        accountAge: 'N/A',
-      }
-    }
-
-    const totalApiKeys = currentUser.api_keys?.length || 0
-    const activeApiKeys = currentUser.api_keys?.filter((key) => key.active).length || 0
-
-    return {
-      totalRoles: currentUser.roles?.length || 0,
-      totalApiKeys,
-      activeApiKeys,
-      accountAge: 'Active', // You can format a date here if you have a created_at field
-    }
-  }, [currentUser])
 
   if (!currentUser) {
     return (
@@ -69,13 +41,6 @@ export function AccountManagement() {
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <AccountStatsCards
-        totalRoles={stats.totalRoles}
-        totalApiKeys={stats.totalApiKeys}
-        activeApiKeys={stats.activeApiKeys}
-        accountAge={stats.accountAge}
-      />
 
       {/* Main Content Tabs */}
       <Tabs defaultValue="profile" className="space-y-6">

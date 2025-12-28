@@ -1,4 +1,4 @@
-import {type ReactNode, type FC, ReactElement, cloneElement} from "react";
+import {type ReactNode, type FC, ReactElement, cloneElement, JSX} from "react";
 import {MdAdd} from "react-icons/md";
 import {Tooltip} from "antd";
 import {Button} from "@/components/ui/button";
@@ -17,7 +17,7 @@ type CustomModalProps = {
     id: string;
     title: string;
     description?: string;
-    component?: ReactElement;
+    component?: ReactElement | JSX.Element;
     width?: number | string;
     children: ReactNode;
 };

@@ -3,7 +3,7 @@ import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 import { type User } from '@/api/user/model'
 import { Copy, Check, Mail, Key, Shield } from 'lucide-react'
-import { useState } from 'react'
+import React, {JSX, ReactElement, useState} from 'react'
 import CustomModal from '@/components/customModal'
 import {
   StatusBadge,
@@ -13,7 +13,7 @@ import {
 
 interface UserDetailModalProps {
   user: User | null
-  triggerComponent: React.ReactElement
+  triggerComponent: ReactElement | JSX.Element
   onManageRoles?: (user: User) => void
   onManageApiKeys?: (user: User) => void
 }
@@ -73,7 +73,7 @@ export function UserDetailModal({
                   {copiedField === 'id' ? (
                     <Check className="h-3 w-3" />
                   ) : (
-                    <Copy className="h-3 w-3" />
+                    <Copy className="h-3 w-3" /> as React['JSX.Element']
                   )}
                 </Button>
               </div>
@@ -94,7 +94,7 @@ export function UserDetailModal({
                   variant="ghost"
                   size="sm"
                   className="h-6 w-6 p-0"
-                  onClick={() => copyToClipboard(user.email, 'email')}
+                  onClick={() => copyToClipboard(user?.email, 'email')}
                 >
                   {copiedField === 'email' ? (
                     <Check className="h-3 w-3" />

@@ -9,7 +9,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Button } from '@/components/ui/button'
-import { StatsCards } from './statsCards'
 import { JobsGrid } from './jobsGrid'
 import { JobDetailModal } from './jobDetailModal'
 import { RefreshCw } from 'lucide-react'
@@ -24,7 +23,6 @@ export function DramatiqDashboard() {
   const { openModal } = useModalContext()
   const [selectedQueue, setSelectedQueue] = useState('default')
   const [selectedJob, setSelectedJob] = useState<Job | null>(null)
-  const { data: dashboardData, isLoading: isDashboardLoading } = dramatiq.useDashboardQuery()
   const { data: queues } = dramatiq.useAllQueuesQuery()
 
   const { data: jobs, isLoading: isJobsLoading, refetch: refetchJobs } = dramatiq.useAllJobsQuery(
@@ -62,15 +60,6 @@ export function DramatiqDashboard() {
       console.error('Failed to cancel job:', error)
     }
   }
-
-  const stats = dashboardData?.total_stats || {
-    total_jobs: 0,
-    pending_jobs: 0,
-    completed_jobs: 0,
-    failed_jobs: 0,
-    running_jobs: 0,
-  }
-
   return (
     <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
@@ -85,14 +74,6 @@ export function DramatiqDashboard() {
         </Button>
       </div>
 
-      {/* Stats Cards */}
-      <StatsCards
-        totalJobs={stats.total_jobs}
-        pendingJobs={stats.pending_jobs}
-        completedJobs={stats.completed_jobs}
-        failedJobs={stats.failed_jobs}
-        runningJobs={stats.running_jobs}
-      />
 
       {/* Jobs Table */}
       <Card>

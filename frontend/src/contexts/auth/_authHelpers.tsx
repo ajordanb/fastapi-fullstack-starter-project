@@ -32,7 +32,7 @@ async function _formPostRequest(
     return null;
   }
   if (!response.ok) {
-    const errorMessage = data.detail || data.message || data.error || "Network response was not ok";
+    const errorMessage = data.detail || data.message || data.error?.message || "Network response was not ok";
     throw new Error(errorMessage);
   }
   
@@ -48,7 +48,16 @@ async function _jsonPostRequest(
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(body),
         });
-        if (!response.ok) throw new Error("Network response was not ok");
+        if (!response.ok) {
+            let errorMessage = "Network response was not ok";
+            try {
+                const data = await response.json();
+                errorMessage = data.detail || data.message || data.error?.message || errorMessage;
+            } catch {
+                // Response body is not JSON, use default message
+            }
+            throw new Error(errorMessage);
+        }
         return await response.json();
     }
 
