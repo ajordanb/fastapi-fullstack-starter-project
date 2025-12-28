@@ -6,16 +6,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
 import { Badge } from '@/components/ui/badge'
 import type { ICellRendererParams } from 'ag-grid-community'
 import {
@@ -39,21 +29,17 @@ import { UserDetailModal } from './userDetailModal'
 import { useApi } from '@/api/api'
 import { useToast } from '@/hooks/useToast'
 import useModalContext from '@/hooks/useModal'
+import { StatusBadge as SharedStatusBadge } from '@/components/grid/cellRenderers/StatusBadge'
+import { RolesBadgeCellRenderer } from '@/components/grid/cellRenderers/BadgeListRenderer'
+import { DeleteConfirmDialog } from '@/components/grid/cellRenderers/DeleteConfirmDialog'
 
+// Re-export shared StatusBadge for backward compatibility
 export const StatusBadge: React.FC<ICellRendererParams> = (params) => {
-  const isActive = params.value
-  return isActive ? (
-    <Badge variant="secondary" className="bg-green-100 text-green-800 hover:bg-green-100">
-      <CheckCircle className="h-3.5 w-3.5 mr-1" />
-      Active
-    </Badge>
-  ) : (
-    <Badge variant="destructive" className="bg-red-100 text-red-800 hover:bg-red-100">
-      <XCircle className="h-3.5 w-3.5 mr-1" />
-      Inactive
-    </Badge>
-  )
+  return <SharedStatusBadge value={params.value} type="boolean" showIcon={true} />
 }
+
+// Re-export shared RolesBadge for backward compatibility
+export const RolesBadge = RolesBadgeCellRenderer
 
 export const EmailConfirmationBadge: React.FC<ICellRendererParams> = (params) => {
   const isConfirmed = params.value
@@ -116,35 +102,6 @@ export const SourceBadge: React.FC<ICellRendererParams> = (params) => {
         </Badge>
       )
   }
-}
-
-export const RolesBadge: React.FC<ICellRendererParams> = (params) => {
-  const roles = params.value as UserRole[]
-
-  if (!roles || roles.length === 0) {
-    return (
-      <span className="text-gray-400 cursor-pointer" title="Click to edit roles">
-        No roles
-      </span>
-    )
-  }
-
-  return (
-    <div
-      className="flex flex-wrap gap-1 justify-center items-center w-full cursor-pointer"
-      title="Click to edit roles"
-    >
-      {roles.map((role) => (
-        <Badge
-          key={role.name}
-          variant="outline"
-          className="bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-50 flex-shrink-0"
-        >
-          {role.name}
-        </Badge>
-      ))}
-    </div>
-  )
 }
 
 export const ApiKeysBadge: React.FC<ICellRendererParams> = (params) => {
@@ -341,29 +298,19 @@ export const ActionButtons: React.FC<ICellRendererParams> = (params) => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Delete Confirmation Dialog */}
-      <AlertDialog open={isDeleteAlertOpen} onOpenChange={setIsDeleteAlertOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action will permanently delete the user{' '}
-              <strong>{user.name}</strong> ({user.email}). This action cannot be
-              undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={confirmDelete}
-              className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
-              disabled={isSubmitting}
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <DeleteConfirmDialog
+        open={isDeleteAlertOpen}
+        onOpenChange={setIsDeleteAlertOpen}
+        onConfirm={confirmDelete}
+        isSubmitting={isSubmitting}
+        description={
+          <>
+            This action will permanently delete the user{' '}
+            <strong>{user.name}</strong> ({user.email}). This action cannot be
+            undone.
+          </>
+        }
+      />
     </>
   )
 }

@@ -3,6 +3,7 @@ import { type ColDef } from 'ag-grid-community'
 import { type UserRole } from '@/api/user/model'
 import { Badge } from '@/components/ui/badge'
 import CustomGrid from '@/components/grid/customGrid'
+import { BadgeListRenderer } from '@/components/grid/cellRenderers/BadgeListRenderer'
 
 interface RolesGridProps {
   roles: UserRole[]
@@ -27,27 +28,6 @@ function RoleNameBadge({ value }: { value: string }) {
   )
 }
 
-function ScopesBadge({ value }: { value: string[] }) {
-  if (!value || value.length === 0) {
-    return <span className="text-sm text-muted-foreground">No scopes</span>
-  }
-
-  return (
-    <div className="flex flex-wrap gap-1">
-      {value.slice(0, 3).map((scope) => (
-        <Badge key={scope} variant="secondary" className="text-xs">
-          {scope}
-        </Badge>
-      ))}
-      {value.length > 3 && (
-        <Badge variant="secondary" className="text-xs">
-          +{value.length - 3} more
-        </Badge>
-      )}
-    </div>
-  )
-}
-
 export function RolesGrid({ roles, isLoading }: RolesGridProps) {
   const columnDefs = useMemo<ColDef<UserRole>[]>(
     () => [
@@ -69,7 +49,14 @@ export function RolesGrid({ roles, isLoading }: RolesGridProps) {
       {
         headerName: 'Scopes',
         field: 'scopes',
-        cellRenderer: (params: any) => <ScopesBadge {...params} />,
+        cellRenderer: (params: any) => (
+          <BadgeListRenderer
+            value={params.value}
+            maxDisplay={3}
+            variant="secondary"
+            emptyText="No scopes"
+          />
+        ),
         minWidth: 250,
         flex: 2,
       },

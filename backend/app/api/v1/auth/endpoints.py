@@ -124,13 +124,11 @@ async def refresh(
     """Returns a new access token from a refresh token"""
     user = await User.by_email(token_data.sub)
     scopes, user_role_names = await user.get_user_scopes_and_roles()
-    token_scopes = token_data.scopes or scopes
-    token_roles = token_data.roles or user_role_names
     access_token, at_expires = auth_service.create_access_token(
         subject=user.email,
         client_id=token_data.client_id,
-        scopes=token_scopes,
-        roles=token_roles
+        scopes=scopes,
+        roles=user_role_names
     )
     refresh_token, rt_expires = auth_service.create_refresh_token(
         subject=user.email,

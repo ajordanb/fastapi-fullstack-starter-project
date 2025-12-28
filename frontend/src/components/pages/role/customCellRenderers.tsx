@@ -6,16 +6,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
 import { Badge } from '@/components/ui/badge'
 import type { ICellRendererParams } from 'ag-grid-community'
 import { Edit, MoreHorizontal, Trash2, Eye, Lock } from 'lucide-react'
@@ -26,28 +16,11 @@ import { RoleFormDialog } from './roleFormDialog'
 import { RoleDetailModal } from './roleDetailModal'
 import { useApi } from '@/api/api'
 import { useToast } from '@/hooks/useToast'
+import { ScopesBadgeCellRenderer } from '@/components/grid/cellRenderers/BadgeListRenderer'
+import { DeleteConfirmDialog } from '@/components/grid/cellRenderers/DeleteConfirmDialog'
 
-export const ScopesBadge: React.FC<ICellRendererParams> = (params) => {
-  const scopes = params.value as string[]
-
-  if (!scopes || scopes.length === 0) {
-    return <span className="text-gray-400">No scopes</span>
-  }
-
-  return (
-    <div className="flex flex-wrap gap-1 justify-center items-center w-full">
-      {scopes.map((scope) => (
-        <Badge
-          key={scope}
-          variant="outline"
-          className="bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-50 flex-shrink-0"
-        >
-          {scope}
-        </Badge>
-      ))}
-    </div>
-  )
-}
+// Re-export shared ScopesBadge for backward compatibility
+export const ScopesBadge = ScopesBadgeCellRenderer
 
 export const CreatedByBadge: React.FC<ICellRendererParams> = (params) => {
   const createdBy = params.value as string
@@ -151,29 +124,19 @@ export const ActionButtons: React.FC<ICellRendererParams> = (params) => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Delete Confirmation Dialog */}
-      <AlertDialog open={isDeleteAlertOpen} onOpenChange={setIsDeleteAlertOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action will permanently delete the role{' '}
-              <strong>{role.name}</strong>. This action cannot be undone and may
-              affect users with this role.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={confirmDelete}
-              className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
-              disabled={isSubmitting}
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <DeleteConfirmDialog
+        open={isDeleteAlertOpen}
+        onOpenChange={setIsDeleteAlertOpen}
+        onConfirm={confirmDelete}
+        isSubmitting={isSubmitting}
+        description={
+          <>
+            This action will permanently delete the role{' '}
+            <strong>{role.name}</strong>. This action cannot be undone and may
+            affect users with this role.
+          </>
+        }
+      />
     </>
   )
 }

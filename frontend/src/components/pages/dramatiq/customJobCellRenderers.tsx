@@ -1,4 +1,3 @@
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -8,26 +7,15 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { MoreHorizontal, Eye, RotateCcw, XCircle } from 'lucide-react'
 import { format } from 'date-fns'
+import { StatusBadge as SharedStatusBadge } from '@/components/grid/cellRenderers/StatusBadge'
 
 interface JobStatus {
   status: 'pending' | 'running' | 'completed' | 'failed'
 }
 
+// Re-export shared StatusBadge for job status
 export function StatusBadge({ status }: JobStatus) {
-  const statusConfig = {
-    pending: { label: 'Pending', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' },
-    running: { label: 'Running', variant: 'default' as const, className: 'bg-blue-100 text-blue-800' },
-    completed: { label: 'Completed', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-    failed: { label: 'Failed', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' },
-  }
-
-  const config = statusConfig[status] || statusConfig.pending
-
-  return (
-    <Badge variant={config.variant} className={config.className}>
-      {config.label}
-    </Badge>
-  )
+  return <SharedStatusBadge value={status} type="job-status" />
 }
 
 interface MessageIdCellProps {
