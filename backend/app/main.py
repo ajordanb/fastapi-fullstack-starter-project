@@ -168,7 +168,6 @@ async def app_documentation():
         hide_models=True,
         hide_client_button=True,
         authentication={
-            "client_id": "your client id",
-            "client_secret": "your client secret",
+            "preferredSecurityScheme": "JWT",
         }
     )
